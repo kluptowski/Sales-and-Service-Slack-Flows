@@ -1,3 +1,8 @@
+<a href="https://githubsfdeploy.herokuapp.com?owner=kluptowski&repo=Sales-and-Service-Slack-Flows&ref=master">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
+</a>
+
 # Salesforce DX Project: Next Steps
 
 Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
