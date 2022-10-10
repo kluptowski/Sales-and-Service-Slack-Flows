@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>sse_All_Flows</fullName>
+    <columns>MasterLabel</columns>
+    <columns>sse_Flow_Demo__c</columns>
+    <columns>sse_Which_App_To_Use__c</columns>
+    <columns>sse_Active__c</columns>
+    <columns>sse_Button_Label__c</columns>
+    <columns>sse_Slack_Message__c</columns>
+    <columns>sse_Bot_Name__c</columns>
+    <columns>sse_Slack_Workspace__c</columns>
+    <columns>sse_Slack_ID_Recipient__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Flows</label>
+    <language>en_US</language>
+</ListView>

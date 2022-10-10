@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>sse_Active__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Check = the flow will run. Uncheck the box to turn off the flow. (via Get Records and Decision element in flow)</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Check = the flow will run. Uncheck the box to turn off the flow.</inlineHelpText>
+    <label>Active?</label>
+    <type>Checkbox</type>
+</CustomField>

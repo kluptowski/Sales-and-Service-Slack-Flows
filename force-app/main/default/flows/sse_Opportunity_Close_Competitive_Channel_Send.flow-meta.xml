@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>This action should be included in the sse_ sales screen flow but an undetailed error is occurring and so I am attempting to put it as its own flow.</description>
+        <name>Send_to_Channel</name>
+        <label>Send to Channel</label>
+        <locationX>308</locationX>
+        <locationY>408</locationY>
+        <actionName>slackPostMessage</actionName>
+        <actionType>slackPostMessage</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>slackAppIdForToken</name>
+            <value>
+                <elementReference>fAppID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackConversationId</name>
+            <value>
+                <elementReference>Get_Variables.sse_Slack_ID_Recipient__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackMessage</name>
+            <value>
+                <elementReference>ttBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>slackWorkspaceIdForToken</name>
+            <value>
+                <elementReference>Get_Variables.sse_Slack_Workspace__c</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <description>Moving this action to its own flow that is triggered off oppty update instead of within the screen flow as a means to improve performance. This worked to properly trigger.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>ID of salesforce app on slack</description>
+        <name>fAppID</name>
+        <dataType>String</dataType>
+        <expression>IF( ISPICKVAL({!Get_Variables.sse_Which_App_To_Use__c},&quot;Sales Cloud for Slack&quot;),&quot;A028VJ1KG3G&quot;,
+IF( ISPICKVAL({!Get_Variables.sse_Which_App_To_Use__c},&quot;Service Cloud for Slack&quot;),&quot;A01RDL2NJAH&quot;,
+&quot;A03269G3DNE&quot;))</expression>
+    </formulas>
+    <formulas>
+        <description>absolute URL to get to record</description>
+        <name>fHyperlink</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Api.Partner_Server_URL_340}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_340})) &amp;{!$Record.Id}</expression>
+    </formulas>
+    <formulas>
+        <description>says either would or would not</description>
+        <name>fYesNoOption</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.sse_Competitive_Team_Follow_Up__c}=&quot;Yes&quot;,&quot;would&quot;,&quot;would not&quot;)</expression>
+    </formulas>
+    <interviewLabel>Opportunity Close Competitive Channel Send {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Close Competitive Channel Send</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Query for metadata to send message</description>
+        <name>Get_Variables</name>
+        <label>Get Variables</label>
+        <locationX>308</locationX>
+        <locationY>288</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Send_to_Channel</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>sse_Flow_Demo__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sales Closed Second Message</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>sse_demo_constants__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>sse_Competitive_Team_Follow_Up__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>sse_Opportunity_Close_Flow_Timestamp__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Get_Variables</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>body of the message to be sent</description>
+        <name>ttBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>*New competitive intel submission!*
+*Opportunity:* &lt;{!fHyperlink}|{!$Record.Name}&gt;
+*Stage:* {!$Record.StageName}
+*Competitor:* {!$Record.Competitor__c}
+&lt;@{!Get_Variables.sse_Button_Label__c}&gt; submitted the survey and indicated this *{!fYesNoOption}* be a good opportunity to follow up for more info.</text>
+    </textTemplates>
+</Flow>

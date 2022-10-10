@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>56.0</apiVersion>
+    <choices>
+        <name>choiceNo</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>choiceYes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <description>What did they pick on the screen?</description>
+        <name>Choice_Yes_No</name>
+        <label>Choice Yes/No</label>
+        <locationX>839</locationX>
+        <locationY>510</locationY>
+        <defaultConnector>
+            <targetReference>Confirmation_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Do_you_want_to_update_the_case_again</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>choiceYes</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Wrap_Up_Fields</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_the_button_been_clicked</name>
+        <label>Has the button been clicked?</label>
+        <locationX>592</locationX>
+        <locationY>326</locationY>
+        <defaultConnector>
+            <targetReference>Done_it_before_screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>First_Time</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Find_The_Case.sse_Swarm_Wrap_Up_Timestamp__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Wrap_Up_Fields</targetReference>
+            </connector>
+            <label>First Time</label>
+        </rules>
+    </decisions>
+    <description>Screen flow presented in slack after a swarm is closed</description>
+    <dynamicChoiceSets>
+        <name>picklistStatus</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Status</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Slack</environments>
+    <interviewLabel>Swarm Wrap Up {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Swarm Wrap Up</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Searches for the case related to the swarm that triggered the initial flow.</description>
+        <name>Find_The_Case</name>
+        <label>Find The Case</label>
+        <locationX>592</locationX>
+        <locationY>206</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_the_button_been_clicked</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varCaseID</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_the_case</name>
+        <label>Update the case</label>
+        <locationX>462</locationX>
+        <locationY>663</locationY>
+        <connector>
+            <targetReference>Confirmation_Screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varCaseID</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>SDO_Service_Close_Summary__c</field>
+            <value>
+                <elementReference>Close_Summary</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <elementReference>Status</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>sse_Swarm_Wrap_Up_Timestamp__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <screens>
+        <name>Case_Wrap_Up_Fields</name>
+        <label>Case Wrap Up Fields</label>
+        <locationX>463</locationX>
+        <locationY>500</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_the_case</targetReference>
+        </connector>
+        <fields>
+            <name>Wrapup</name>
+            <fieldText>&lt;p&gt;Good job closing Case Number {!Find_The_Case.CaseNumber}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Status</name>
+            <choiceReferences>picklistStatus</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Find_The_Case.Status</elementReference>
+            </defaultValue>
+            <fieldText>Status</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Close_Summary</name>
+            <defaultValue>
+                <stringValue>{!Find_The_Case.SDO_Service_Close_Summary__c}</stringValue>
+            </defaultValue>
+            <fieldText>Close Summary</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Confirmation_Screen</name>
+        <label>Confirmation</label>
+        <locationX>458</locationX>
+        <locationY>826</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Finish</name>
+            <fieldText>&lt;p&gt;All set! Thanks for your hard work!&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>screen if they&apos;ve clicked it already</description>
+        <name>Done_it_before_screen</name>
+        <label>Done it before screen</label>
+        <locationX>844</locationX>
+        <locationY>345</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Choice_Yes_No</targetReference>
+        </connector>
+        <fields>
+            <name>Confirmation</name>
+            <fieldText>&lt;p&gt;You have already closed this case ({!Find_The_Case.CaseNumber}) and submitted a close summary.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Are you sure you want to continue?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Do_you_want_to_update_the_case_again</name>
+            <choiceReferences>choiceYes</choiceReferences>
+            <choiceReferences>choiceNo</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Do you want to update the case again?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>466</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Find_The_Case</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varCaseID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

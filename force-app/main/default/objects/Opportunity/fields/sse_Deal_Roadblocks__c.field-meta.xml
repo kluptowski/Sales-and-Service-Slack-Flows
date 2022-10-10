@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>sse_Deal_Roadblocks__c</fullName>
+    <description>Populated thru slack screen flow</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Where did we experience friction?</inlineHelpText>
+    <label>Deal Roadblocks</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

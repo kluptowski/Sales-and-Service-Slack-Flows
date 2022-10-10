@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Slack_Screen</name>
+        <label>Send Slack Screen</label>
+        <locationX>242</locationX>
+        <locationY>648</locationY>
+        <actionName>sse_Swarm_Wrap_Up_Screen</actionName>
+        <actionType>slackSendMessageToLaunchFlow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>ActionInput__buttonLabel</name>
+            <value>
+                <elementReference>Get_Variables.sse_Button_Label__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ActionInput__slackAppIdForToken</name>
+            <value>
+                <elementReference>fAppID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ActionInput__slackBotName</name>
+            <value>
+                <elementReference>Get_Variables.sse_Bot_Name__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ActionInput__slackConversationId</name>
+            <value>
+                <elementReference>$Record.CollaborationRoom.PlatformKey</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ActionInput__slackMessage</name>
+            <value>
+                <stringValue>{!Get_Variables.sse_Slack_Message__c}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ActionInput__slackWorkspaceIdForToken</name>
+            <value>
+                <elementReference>$Record.CollaborationRoom.TeamKey</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>varCaseID</name>
+            <value>
+                <elementReference>$Record.RelatedRecordId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <description>Searches the #se-demo-constants custom metadata type to ensure there is an Active record. If inactive, that would imply the Solution Engineer unchecked the active box because they did not want the flow to fire.</description>
+        <name>Found_metadata</name>
+        <label>Found metadata?</label>
+        <locationX>374</locationX>
+        <locationY>528</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Active_Service_Flow</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Variables.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Slack_Screen</targetReference>
+            </connector>
+            <label>Active Service Flow</label>
+        </rules>
+    </decisions>
+    <description>This is the record trigger that sends the slack screen flow into the swarm channel when a swarm is moved to the Closed status.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>ID of the slack app from the appexchange</description>
+        <name>fAppID</name>
+        <dataType>String</dataType>
+        <expression>IF( ISPICKVAL({!Get_Variables.sse_Which_App_To_Use__c},&quot;Sales Cloud for Slack&quot;),&quot;A028VJ1KG3G&quot;,
+IF( ISPICKVAL({!Get_Variables.sse_Which_App_To_Use__c},&quot;Service Cloud for Slack&quot;),&quot;A01RDL2NJAH&quot;,
+&quot;A03269G3DNE&quot;))</expression>
+    </formulas>
+    <interviewLabel>Swarm Wrap Up Send Slack Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Swarm Wrap Up Trigger Slack Screen Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Variables</name>
+        <label>Get Variables</label>
+        <locationX>374</locationX>
+        <locationY>408</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Found_metadata</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>sse_Flow_Demo__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Service Wrap</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>sse_Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>sse_demo_constants__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update the triggering swarm with a timestamp that can be referenced in the second flow.</description>
+        <name>Timestamp_the_Swarm</name>
+        <label>Timestamp the Swarm</label>
+        <locationX>374</locationX>
+        <locationY>288</locationY>
+        <connector>
+            <targetReference>Get_Variables</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>sse_Swarm_Wrap_Up_Timestamp__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <object>Swarm</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Timestamp_the_Swarm</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>ttMessageBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Please summarize the case</text>
+    </textTemplates>
+</Flow>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Sales Closed Input Screen</label>
+    <protected>false</protected>
+    <values>
+        <field>sse_Active__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>sse_Bot_Name__c</field>
+        <value xsi:type="xsd:string">n/a</value>
+    </values>
+    <values>
+        <field>sse_Button_Label__c</field>
+        <value xsi:type="xsd:string">U03T5DX1PPB</value>
+    </values>
+    <values>
+        <field>sse_Flow_Demo__c</field>
+        <value xsi:type="xsd:string">Sales Closed Second Message</value>
+    </values>
+    <values>
+        <field>sse_Slack_ID_Recipient__c</field>
+        <value xsi:type="xsd:string">C042X40AWQ7</value>
+    </values>
+    <values>
+        <field>sse_Slack_Message__c</field>
+        <value xsi:type="xsd:string">***For this record, enter your user&apos;s slack ID in the Button Label field and a channel ID in the Slack ID Recipient field*** (You don&apos;t have to edit this field)</value>
+    </values>
+    <values>
+        <field>sse_Slack_Workspace__c</field>
+        <value xsi:type="xsd:string">T03SSQQ1F0A</value>
+    </values>
+    <values>
+        <field>sse_Which_App_To_Use__c</field>
+        <value xsi:type="xsd:string">Sales Cloud for Slack</value>
+    </values>
+</CustomMetadata>
