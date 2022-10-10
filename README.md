@@ -3,6 +3,18 @@
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
 </a>
 
+Instructions:
+
+<ol>
+  <li>Log in to your Salesforce org in a separate Chrome profile or incognito window</li>
+  <li>Click the Deploy to Salesforce button on this page</li>
+  <li>In the linked page, click Deploy</li>
+</ol>
+
+
+Disclaimers:
+-This is intended for SDOs and is not guaranteed to work with any IDO
+
 # Salesforce DX Project: Next Steps
 
 Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
