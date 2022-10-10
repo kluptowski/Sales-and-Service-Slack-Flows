@@ -6,7 +6,7 @@
 <p><h4>Instructions:</h4></p>
 
 <ol>
-  <li>Log in to your Salesforce org in a separate Chrome profile or incognito window</li>
+  <li>You should be viewing this page from a separate, dedicated chrome profile or an incognito window where you are also logged into the Salesforce org you want to download these flows into.</li>
   <li>Click the Deploy to Salesforce button directly above on this page</li>
   <li>In the newly opened tab, click Deploy</li>
   <li>Wait for the install to complete; est. 15 minutes. (you can check progress in the salesforce setup menu under Deployment Status. You will see "Deployment Complete" when done.) 
