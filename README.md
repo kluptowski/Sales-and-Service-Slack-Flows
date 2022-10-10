@@ -3,7 +3,7 @@
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
 </a>
 
-Instructions:
+<p><h4>Instructions:</h4></p>
 
 <ol>
   <li>Log in to your Salesforce org in a separate Chrome profile or incognito window</li>
@@ -12,9 +12,9 @@ Instructions:
   <li>Wait for the install to complete; est. 15 minutes. (you can check progress in the salesforce setup menu under Deployment Status. You will see "Deployment Complete" when done.) 
 </ol>
 
-<p>Full post-install instructions and video can be found <a href="https://salesforce.quip.com/5SlmA9uOJPmO ">here</a>
+<p><h4>Full post-install instructions and video can be found <a href="https://salesforce.quip.com/5SlmA9uOJPmO" target="_blank">here</a></h4></p>
 
-Disclaimers:
+<p><h4>Disclaimers:</h4></p>
 
 <ul>
   <li>This was built using an SDO and is not guaranteed to work with any IDO</li>
