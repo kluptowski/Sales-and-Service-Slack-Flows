@@ -7,29 +7,18 @@ Instructions:
 
 <ol>
   <li>Log in to your Salesforce org in a separate Chrome profile or incognito window</li>
-  <li>Click the Deploy to Salesforce button on this page</li>
-  <li>In the linked page, click Deploy</li>
+  <li>Click the Deploy to Salesforce button directly above on this page</li>
+  <li>In the newly opened tab, click Deploy</li>
+  <li>Wait for the install to complete; est. 15 minutes. (you can check progress in the salesforce setup menu under Deployment Status. You will see "Deployment Complete" when done.) 
 </ol>
 
+<p>Full post-install instructions and video can be found <a href="https://salesforce.quip.com/5SlmA9uOJPmO ">here</a>
 
 Disclaimers:
--This is intended for SDOs and is not guaranteed to work with any IDO
 
-# Salesforce DX Project: Next Steps
+<ul>
+  <li>This was built using an SDO and is not guaranteed to work with any IDO</li>
+  <li>Salesforce Field Level Security only deployed for the System Administrator, *Sales, and *Service profiles. Using the screen flows in slack with connected salesforce user of a different profile may cause the flow to error.</li>
+  <li>You will need to make adjustments in the Salesforce Setup Menu > Custom Metadata Types > #se-demo-constants > Manage Reecords before the Sales flow will work.</li>
+</ul>
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
-
-## How Do You Plan to Deploy Your Changes?
-
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
-
-## Configure Your Salesforce DX Project
-
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
-
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
