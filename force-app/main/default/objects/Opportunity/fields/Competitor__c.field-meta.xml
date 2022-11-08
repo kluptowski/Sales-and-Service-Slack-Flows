@@ -12,9 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Toasted Roast</fullName>
+                <fullName>Competitor A</fullName>
                 <default>false</default>
-                <label>Toasted Roast</label>
+                <label>Competitor A</label>
             </value>
             <value>
                 <fullName>Competitor B</fullName>
