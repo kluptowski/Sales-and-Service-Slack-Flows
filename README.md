@@ -3,6 +3,8 @@
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
 </a>
 
+<p>New changes to package reflect the updates to the SDO that Q Branch deployed in October 2022</p>
+
 <p><h4>Instructions:</h4></p>
 
 <ol>
