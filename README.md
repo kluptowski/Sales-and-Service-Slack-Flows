@@ -1,4 +1,4 @@
-<a href="https://githubsfdeploy.herokuapp.com?owner=kluptowski&repo=Sales-and-Service-Slack-Flows&ref=master">
+<a href="https://githubsfdeploy.herokuapp.com?owner=kluptowski&repo=Sales-and-Service-Slack-Flows&ref=new-sdo">
   <img alt="Deploy to Salesforce"
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
 </a>
