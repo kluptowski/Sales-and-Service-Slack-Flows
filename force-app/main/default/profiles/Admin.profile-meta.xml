@@ -87,4 +87,9 @@
     <layoutAssignments>
         <layout>sse_demo_constants__mdt-%23se-demo-constants Layout</layout>
     </layoutAssignments>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Opportunity.SimpleOpportunity</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </Profile>
