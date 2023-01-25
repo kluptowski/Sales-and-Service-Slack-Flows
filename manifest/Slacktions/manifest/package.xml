@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>Opportunity.Record_Hyperlink_URL__c</members>
+		<members>Opportunity.Slack_Initial_Channel__c</members>
+		<members>Opportunity.Slack_Initial_Message__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
+		<members>Opportunity_Creation_Slack</members>
+		<name>CustomNotificationType</name>
+	</types>
+	<types>
+		<members>Invite_OTM_to_Channel</members>
+		<members>Slack_Core_Actions_Opportunity</members>
+		<name>Flow</name>
+	</types>
+	<version>55.0</version>
+</Package>
